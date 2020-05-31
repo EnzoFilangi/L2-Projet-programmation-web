@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <header>
+        <div id="header_title">
+            <h1>Bien débuter sur League of Legends</h1>
+        </div>
+        <div id="header_buttons">
+            <button onclick="window.location.href='index.html';">Accueil</button>
+            <button>Bien débuter</button>
+            <button>Les rôles</button>
+            <button>Les items</button>
+            <button>La map</button>
+            <button>Les leagues</button>
+            <button onclick="window.location.href='questionnaire.html';" class="selected">Le champion qui vous correspond</button>
+            <button>Ultimate Bravery</button>
+        </div>
+    </header>
+    <main>
+        <form>
+            <p id="question"></p>
+            <div id="answer_list">
+
+            </div>
+            <button type="button" onclick="next_question()" id="next_question_button">QUESTION SUIVANTE</button>
+        </form>
+    </main>
+    <footer>
+        <p>&copy; 2020 Enzo Filangi, Hugo Freitas, Paul Meignan, Alexandre Poloubinski | <a href="credits.html">Qui sommes nous ?</a></p>
+    </footer>
+    <script type="text/javascript" src="data_questionnaire.js"></script>
+    <script type="text/javascript">
+        var data = JSON.parse(data_questionnaire_json);
+        var current_question = 0;
+        var last = data.length;
+
+        display_question();
+
+        function clear_answers(recipient) {
+            while (recipient.firstChild) {
+                recipient.removeChild(recipient.lastChild);
+            }
+        }
+
+        function display_question() {
+            console.log("current ", current_question, " | last ", last);
+            
+            document.getElementById("question").textContent = data[current_question]['question'];
+            const recipient = document.getElementById("answer_list");
+            clear_answers(recipient);
+            data[current_question]['reponses'].forEach((value) => {
+                const new_answer = document.createElement("input");
+                new_answer.setAttribute("type", "radio");
+                new_answer.setAttribute("name", "answer");
+                new_answer.setAttribute("value", value[1]);
+                recipient.appendChild(new_answer);
+                const new_answer_text = document.createElement("label");
+                new_answer_text.textContent = value[0];
+                recipient.appendChild(new_answer_text);
+            })
+        }
+        
+        function display_end() {
+            console.log("end");
+            clear_answers(document.getElementById("answer_list"));
+            document.getElementById("question").textContent = "Bravo, le test est terminé !";
+            const element = document.getElementById("next_question_button");
+            element.parentNode.removeChild(element);
+        }
+
+        function next_question() {
+            const form = new FormData(document.querySelector("form"));
+            form.forEach((value) => {
+                console.log(value);
+            })
+            current_question++;
+            if(current_question < last) 
+            {
+                display_question();
+            }
+            else
+            {
+                display_end();
+            }
+        }
+    </script>
+</body>
+</html>
