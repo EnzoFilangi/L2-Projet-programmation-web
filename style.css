@@ -9,7 +9,7 @@ body {
 }
 
 header, main, footer {
-    background: #052040; /*#092949;*/
+    background: rgb(06, 24, 45); /*#092949;*/
     padding: 10px;
     display: block;
     margin-left: auto;
@@ -82,8 +82,17 @@ div.content{
     margin-right: auto;
 }
 
-div.content h2{
+
+div.content h2:not(.no_top_space){
     margin-top: 3em;
+}
+
+div.content h2{
+    font-size: 3em;
+}
+
+h3{
+    font-size: 2em;
 }
 
 div.content p{
