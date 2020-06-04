@@ -63,7 +63,6 @@ button {
 footer p {
     font-size: 0.8em;
     color: gray;
-
 }
 
 button.selected {
@@ -84,7 +83,7 @@ div.content{
 
 
 div.content h2:not(.no_top_space){
-    margin-top: 3em;
+    margin-top: 2em;
 }
 
 div.content h2{
@@ -95,6 +94,21 @@ h3{
     font-size: 2em;
 }
 
+p.caption{
+    color: gray !important;
+    font-size: 0.8em;
+    margin-top:-0.3em;
+    font-style: italic;
+}
+
 div.content p{
     color: lightgray;
+}
+
+div.image {
+    float: left;
+}
+
+table tr,td {
+    padding: 2em;
 }
