@@ -55,11 +55,6 @@ header div button {
     border-radius: 5%;
 }
 
-button {
-    color: black;
-    background-color: #cdcdcd;
-}
-
 footer p {
     font-size: 0.8em;
     color: gray;
