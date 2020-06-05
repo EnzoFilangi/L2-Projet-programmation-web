@@ -9,17 +9,17 @@ body {
 }
 
 header, main, footer {
-    background: rgb(06, 24, 45); /*#092949;*/
+    background: rgb(06, 24, 45);
     padding: 10px;
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 20px;
     max-width: 1500px;
     border: solid steelblue 1px;
 }
 
 header {
+    margin-bottom: 20px;
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
     position: fixed;
     top: 0;
@@ -30,8 +30,19 @@ header {
     margin-right: auto;
 }
 
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 main {
     margin-top: 11em;
+    margin-bottom: 4.8em;
 }
 
 
