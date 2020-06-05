@@ -1,4 +1,4 @@
-const data = [
+const data_items = [
     {"nom" : "Force de la Trinité",         "img" : "Trinity_Force_item.png",                      "description" : "Octroie un bonus de vie, de mana, et d\'AD. Les dégâts d’une attaque de base suivant un sort sont augmentés. Octroie un bonus de vitesse de déplacement après avoir réussi une attaque de base."},
     {"nom" : "Convergence de Zeke",         "img" : "Zeke%2527s_Convergence_item.png",             "description" : "Octroie un bonus de résistance magique et d’armure. Activable, vous vous liez avec un allié. Si vous utilisez votre ultime, votre allié recevra un bonus de dégât sur ses attaques de base et vous créerez une zone de glace autour de vous, qui ralentit tous les ennemis situés à l’intérieur. Cette zone est plus efficace contre les cibles de votre allié."},
     {"nom" : "Morellonomicon",              "img" : "Morellonomicon_item.png",                     "description" : "Octroie un bonus d’AP et un bonus de vie. Accorde de la pénétration de résistance magique (ignore une partie fixe des résistances magiques de la cible). Les dégâts magiques infligent <b>Hémorragie</b> à la cible."},

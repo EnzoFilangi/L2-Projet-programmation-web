@@ -24,38 +24,27 @@
     <main>
         <div class="content">
             <h2 class="no_top_space">Les items</h2>
-            <p>La plupart des items de LoL s'achètent sur la durée, c’est-à-dire qu’au premier retour à la base, on achète une première partie de l’objet que l’on souhaite acheter (ce qui donne un petite partie des effets de l’item en question), puis après avoir amassé quelques gold en plus, le joueur achète une seconde partie de l’objet, etc. Cela peut évidemment varier en fonction de la partie, si vous faites beaucoup de kills, vous pourrez prendre plus d’objet et inversement.</p>
+            <p>La plupart des items de League of Legends s'achètent sur la durée, c’est-à-dire qu’au premier retour à la base, on achète une première partie de l’objet que l’on souhaite acheter (ce qui donne un petite partie des effets de l’item en question), puis après avoir amassé quelques gold en plus, le joueur achète une seconde partie de l’objet, etc. Cela peut évidemment varier en fonction de la partie, si vous faites beaucoup de kills, vous pourrez prendre plus d’objet et inversement.</p>
             <p>Nous allons donc lister quelques objets avec leur effets.</p>
-            <div class="items" id="finished_items_list">
+            <div class="items" id="finished_items_list"></div>
 
-            </div>
             <br>
-            <p>À ces items terminés viennent s'ajouter des bottes <img src="images/items/Boots_of_Speed_item.png" alt="Les bottes de bases" title="Les bottes de bases" width="40px"></p>
+            <p>À ces items terminés viennent s'ajouter des bottes <img src="images/items/Boots_of_Speed_item.png" alt="Les bottes de bases" title="Les bottes de bases"></p>
             <p>Elles vous permettront de vous déplacer plus rapidement, et peuvent être améliorées pour des statistiques bonus supplémentaires.</p>
+
             <br>
             <p>Enfin, vous disposez également de trinkets. Ils occupent un emplacement d'item spécial et sont utiles pour la vision. En effet, ils révèlent la zone autour d'eux, levant ainsi le brouillard de guerre dans un court rayon.</p>
-            <div class="items">
-                <article>
-                    <img src="images/items/Warding_Totem_item.png" alt="Ward" title="Ward" width="40px">
-                    <h3>Jaune : Ward basique</h3>
-                    <p>Vous donne de la vision pendant un laps de temps (qui augmente avec votre niveau), se détruit en 3 coups. La ward est invisible, à moins d'être révélée par le trinket rouge ou autre habilité/objet.</p>
-                </article>
-                <article>
-                    <img src="images/items/Oracle_Lens_item.png" alt="Lentille de l'oracle" title="Lentille de l'oracle" width="40px">
-                    <h3>Rouge : Lentille de l'oracle</h3>
-                    <p>Révèle les wards cachées, ainsi que tout piège ou unitée cachée. Actif pendant dix secondes.</p>
-                </article>
-                <article>
-                    <img src="images/items/Farsight_Alteration_item.png" alt="Altération Divinatoire" title="Altération Divinatoire" width="40px">
-                    <h3>Bleu : Altération Divinatoire</h3>
-                    <p>Fonctionne comme la ward basique avec un rayon beaucoup plus grand. Cependant, cette ward n'est pas cachée à l'ennemi et il peut la détruire en un coup.</p>
-                </article>
-                <article>
-                    <img src="images/items/Control_Ward_item.png" alt="Pink Ward" title="Pink Ward" width="40px">
-                    <h3>Pink Ward, ou Control Ward</h3>
-                    <p>Cet objet n'est pas un trinket ; il coûte 75 golds et occupe un emplacement d'item. La pink ward produit le même effet de vision que la ward basique. Son avantage est qu'elle reste active jusqu'à être détruite ou remplacée (un joueur ne peut avoir qu'une pink ward active à la fois).</p>
-                </article>
-            </div>
+            <div class="items" id="tokens_list"></div>
+
+            <h2>Les sorts d'invocateur</h2>
+            <p>Les sorts d'invocateur sont des capacités communes à tous les champions. Il en existe 9, et le joueur en choisit deux au début de la partie, qu'il garde tout du long. Ce sont des sorts puissants, mais qui prennent beaucoup de temps avant de pouvoir être réutilisés.</p>
+            <div class="items" id="summoner_spells_list"></div>
+
+            <h2>Les runes</h2>
+            <p>Enfin, vous pouvez personnaliser votre page de runes selon 5 axes de runes (Un axe principal, un axe secondaire, et trois "cristaux"). Ce sont des éléments extrêmement impotants qui influent grandement sur l'efficacité de votre champion. Ainsi il est primordial de bien réfléchir à ses runes. Vous trouverez facilement sur internet une ou plusieurs pages de runes optimales pour chaque champion.</p>
+            <div class="items" id="runes_list"></div>
+            <p class="caption">Voici un exemple de page</p>
+            <img src="images/runes/exemple.PNG" alt="Exemple de page de runes" title="Exemple de page de runes">
         </div>
     </main>
     <footer>
@@ -63,13 +52,34 @@
     </footer>
 
     <script type="text/javascript" src="data_items.js"></script>
+    <script type="text/javascript" src="data_tokens.js"></script>
+    <script type="text/javascript" src="data_summoner_spells.js"></script>
+    <script type="text/javascript" src="data_runes.js"></script>
     <script type="text/javascript">
-        const div = document.getElementById("finished_items_list");
+        populate_items();
+        populate_tokens();
+        populate_spells();
+        populate_runes();
 
-        data.forEach((value) => {
+        function populate_items() {
+            const div = document.getElementById("finished_items_list");
+            data_items.forEach((value) => create_article(value, "images/items/", div));
+        }
+
+        function populate_tokens() {
+            const div = document.getElementById("tokens_list");
+            data_tokens.forEach((value) => create_article(value, "images/items/", div));
+        }
+
+        function populate_spells() {
+            const div = document.getElementById("summoner_spells_list");
+            data_summoner_spells.forEach((value) => create_article(value, "images/summoner-spells/", div));
+        }
+
+        function create_article(value, path, div) {
             const article = document.createElement("article");
             let img = document.createElement("img");
-            img.src = "images/items/" + value["img"];
+            img.src = path + value["img"];
             img.alt = value["nom"];
             img.title = value["nom"];
             article.appendChild(img);
@@ -83,7 +93,33 @@
             article.appendChild(content);
 
             div.appendChild(article);
-        })
+        }
+
+        function populate_runes() {
+            const div = document.getElementById("runes_list");
+            data_runes.forEach((value) => {
+                const article = document.createElement("article");
+                let img = document.createElement("img");
+                img.src = "images/runes/" + value["img"];
+                img.alt = value["nom"];
+                img.title = value["nom"];
+                article.appendChild(img);
+
+                let title = document.createElement("h3");
+                title.textContent = value["nom"];
+                article.appendChild(title);
+
+                let subtitle = document.createElement("h4");
+                subtitle.textContent = value["sous-titre"];
+                article.appendChild(subtitle);
+
+                let content = document.createElement("p")
+                content.innerHTML = value["description"];
+                article.appendChild(content);
+
+                div.appendChild(article);
+            })
+        }
     </script>
 </body>
 </html>

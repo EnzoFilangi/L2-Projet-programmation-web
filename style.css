@@ -132,6 +132,13 @@ article h3 {
     font-size: 1em;
 }
 
+article h4 {
+    margin: 0;
+    font-size: 1em;
+    font-weight: normal;
+    font-style: italic;
+}
+
 article p {
     font-size: 0.8em;
 }

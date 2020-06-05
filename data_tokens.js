@@ -1,0 +1,6 @@
+const data_tokens = [
+    {"nom" : "Jaune : Ward basique",             "img" : "Warding_Totem_item.png",           "description" : "Vous donne de la vision pendant un laps de temps (qui augmente avec votre niveau), se détruit en 3 coups. La ward est invisible, à moins d'être révélée par le trinket rouge ou autre capacité/objet."},
+    {"nom" : "Rouge : Lentille de l'oracle",     "img" : "Oracle_Lens_item.png",             "description" : "Révèle les wards cachées, ainsi que tout piège ou unitée cachée. Actif pendant dix secondes."},
+    {"nom" : "Bleu : Altération Divinatoire",    "img" : "Farsight_Alteration_item.png",     "description" : "Fonctionne comme la ward basique avec un rayon beaucoup plus grand. Cependant, cette ward n'est pas cachée à l'ennemi et il peut la détruire en un coup."},
+    {"nom" : "Pink Ward, ou Control Ward",       "img" : "Control_Ward_item.png",            "description" : "Cet objet n'est pas un trinket ; il coûte 75 golds et occupe un emplacement d'item. La pink ward produit le même effet de vision que la ward basique. Son avantage est qu'elle reste active jusqu'à être détruite ou remplacée (un joueur ne peut avoir qu'une pink ward active à la fois)."},
+];
