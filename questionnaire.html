@@ -22,14 +22,17 @@
             <button onclick="window.location.href='ultimate_bravery.html';">Ultimate Bravery</button>
         </div>
     </header>
-    <main>
-        <form>
-            <p id="question"></p>
-            <div id="answer_list">
-
-            </div>
-            <button type="button" onclick="next_question()" id="next_question_button">QUESTION SUIVANTE</button>
-        </form>
+    <main style="height: 1000px;">
+        <div class="content">
+            <h2 class="no_top_space" style="text-align: center;">Quel champion est fait pour vous ?</h2>
+            <p style="text-align: center;">En tant que débutant, il peut être intimidant de trouver un champion à jouer. Avec ce questionnaire, nous nous proposons de suggérer une piste par laquelle commencer. Répondez aux questions, et voyez où cela vous emmène.</p>
+            <br><hr><br>
+            <form>
+                <h3 id="question"></h3>
+                <div id="answer_list"></div>
+                <button type="button" onclick="next_question()" id="next_question_button" class="centered padded">QUESTION SUIVANTE</button>
+            </form>
+        </div>
     </main>
     <footer>
         <p>&copy; 2020 Enzo Filangi, Hugo Freitas, Paul Meignan, Alexandre Poloubinski | <a href="credits.html">Qui sommes nous ?</a></p>
@@ -37,12 +40,27 @@
 
 
     <script type="text/javascript" src="data_questionnaire.js"></script>
+    <script type="text/javascript" src="data_champions.js"></script>
     <script type="text/javascript">
-        var data = JSON.parse(data_questionnaire_json);
-        var current_question = 0;
-        var last = data.length;
+        //On reset la vue en haut de la page
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+        window.scrollTo(0,0);
+        //On affiche la première question
+        display(0);
 
-        display_question();
+        function display(number) {
+            const curr = data_questionnaire[number];
+            if (curr["type"] === "question")
+            {
+                display_question(curr);
+            }
+            else
+            {
+                display_champ(curr);
+            }
+        }
 
         function clear_answers(recipient) {
             while (recipient.firstChild) {
@@ -50,46 +68,72 @@
             }
         }
 
-        function display_question() {
-            console.log("current ", current_question, " | last ", last);
-            
-            document.getElementById("question").textContent = data[current_question]['question'];
+        function display_question(question) {
+            document.getElementById("question").textContent = question['question'];
             const recipient = document.getElementById("answer_list");
             clear_answers(recipient);
-            data[current_question]['reponses'].forEach((value) => {
+            question['propositions'].forEach((value) => {
+                //On crée le bouton
                 const new_answer = document.createElement("input");
                 new_answer.setAttribute("type", "radio");
                 new_answer.setAttribute("name", "answer");
                 new_answer.setAttribute("value", value[1]);
+                new_answer.setAttribute("id", value[1])
                 recipient.appendChild(new_answer);
+                //Ainsi que le texte qui va avec
                 const new_answer_text = document.createElement("label");
                 new_answer_text.textContent = value[0];
+                new_answer_text.setAttribute("for", value[1]) //On rend le texte clicable
                 recipient.appendChild(new_answer_text);
+                //Et un retour à la ligne
+                recipient.appendChild(document.createElement("br"));
             })
         }
         
-        function display_end() {
-            console.log("end");
+        function display_champ(champion) {
+            //On supprime tous les éléments existants
             clear_answers(document.getElementById("answer_list"));
-            document.getElementById("question").textContent = "Bravo, le test est terminé !";
-            const element = document.getElementById("next_question_button");
-            element.parentNode.removeChild(element);
+            const question = document.getElementById("question");
+            question.parentNode.removeChild(question);
+            const button = document.getElementById("next_question_button");
+            button.parentNode.removeChild(button);
+
+            //On récupère le div où écrire
+            const recipient = document.getElementById("answer_list");
+
+            //On affiche du texte et l'image du champion
+            const title = document.createElement("h3");
+            title.textContent = "Voici le champion que nous vous recommendons :";
+            recipient.appendChild(title);
+
+            const img = document.createElement("img");
+            img.src = "images/champion_icons/" + data_champions[champion["nom"]];
+            img.alt = champion["nom"] + ". Cliquez pour accéder à sa page du wiki.";
+            img.title = champion["nom"] + ". Cliquez pour accéder à sa page du wiki.";
+            img.setAttribute("width", "100%");
+            //Si on clique sur l'image, on redirige vers le wiki.
+            if(champion["nom"] === "Kai'sa")
+            {
+                //On prévoit un edge case pour Kai'sa car c'est le seul champion pour lequel l'URL du wiki utilise %27 et pas '
+                img.onclick = () => window.open('https://leagueoflegends.fandom.com/wiki/Kai%27Sa', '_blank');
+            } else {
+                img.onclick = () => window.open('https://leagueoflegends.fandom.com/wiki/' + champion["nom"], '_blank');
+            }
+            recipient.appendChild(img);
+
+            const text = document.createElement("p");
+            text.textContent = "Compte tenu de vos réponses, nous pensons qu" + (("AEO".includes(champion["nom"][0])) ? "'" : "e ") + champion["nom"] + " est le champion le plus adapté pour vous.";
+            recipient.appendChild(text);
+
         }
 
         function next_question() {
             const form = new FormData(document.querySelector("form"));
+            let next;
             form.forEach((value) => {
-                console.log(value);
+                next = value;
             })
-            current_question++;
-            if(current_question < last) 
-            {
-                display_question();
-            }
-            else
-            {
-                display_end();
-            }
+            display(next);
         }
     </script>
 </body>
