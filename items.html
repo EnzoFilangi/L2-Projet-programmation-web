@@ -27,9 +27,10 @@
             <h2 class="no_top_space">Les items</h2>
             <p>La plupart des items de League of Legends s'achètent sur la durée, c’est-à-dire qu’au premier retour à la base, on achète une première partie de l’objet que l’on souhaite acheter (ce qui donne un petite partie des effets de l’item en question), puis après avoir amassé quelques gold en plus, le joueur achète une seconde partie de l’objet, etc. Cela peut évidemment varier en fonction de la partie, si vous faites beaucoup de kills, vous pourrez prendre plus d’objet et inversement.</p>
             <p>Nous allons donc lister quelques objets avec leur effets.</p>
+            <input type="text" id="search_input" onkeyup="search()" placeholder="Rechercher un objet...">
             <div class="items" id="finished_items_list"></div>
 
-            <br>
+            <br><hr><br>
             <p>À ces items terminés viennent s'ajouter des bottes <img src="images/items/Boots_of_Speed_item.png" alt="Les bottes de bases" title="Les bottes de bases"></p>
             <p>Elles vous permettront de vous déplacer plus rapidement, et peuvent être améliorées pour des statistiques bonus supplémentaires.</p>
 
@@ -79,6 +80,8 @@
 
         function create_article(value, path, div) {
             const article = document.createElement("article");
+            article.id = value["nom"];
+
             let img = document.createElement("img");
             img.src = path + value["img"];
             img.alt = value["nom"];
@@ -120,6 +123,27 @@
 
                 div.appendChild(article);
             })
+        }
+
+        function search() {
+            let input = document.getElementById('search_input');
+            let text = input.value.toUpperCase();
+            const div = document.getElementById("finished_items_list");
+
+            let children = div.children;
+            for (let i = 0; i < children.length; i++) {
+                let child = children[i];
+                child.style.display = "";
+                if (text !== "" && text !== " ")
+                {
+                    let txtValue = child.children[1].textContent || child.children[1].innerText;
+                    if (txtValue.toUpperCase().indexOf(text) > -1) {
+                        child.style.display = "";
+                    } else {
+                        child.style.display = "none";
+                    }
+                }
+            }
         }
     </script>
 </body>
