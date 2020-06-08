@@ -109,7 +109,7 @@ p.caption{
     font-style: italic;
 }
 
-div.content p{
+div.content p, li{
     color: lightgray;
 }
 
