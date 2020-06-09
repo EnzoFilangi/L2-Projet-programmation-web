@@ -172,3 +172,26 @@ form input {
 form * {
     text-align: center;
 }
+
+.float_left {
+    float: left;
+    margin-right: 30px;
+    margin-bottom: 30px;
+}
+
+.float_right {
+    float: right;
+    margin-left: 30px;
+    margin-bottom: 30px;
+}
+
+.flexed_image {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    margin: 5px;
+}
+
+.flexed_image img {
+    margin: 10px;
+}
