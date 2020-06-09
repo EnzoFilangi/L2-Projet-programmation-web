@@ -23,10 +23,147 @@
         </div>
     </header>
     <main>
-
+        <div class="content">
+            <h2 class="no_top_space">Ultimate Bravery</h2>
+            <hr>
+            <div id="ultimate_bravery_container" style="height: 1000px;">
+                <h3>Qu'est-ce que l'ultimate bravery ?</h3>
+                <p>Vous êtes un joueur avancé qui gagne toutes ses parties et trouve le jeu trop simple ? Ou bien un débutant qui n'a pas vraiment tout compris et pas vraiment envie de comprendre ? Alors l'ultimate bravery est fait pour vous.</p>
+                <p>Un champion et un build vont être générés aléatoirement. Vous devrez ensuite lancer une partie habituelle, et le respecter. Rien ne garanti que le stuff proposé sera logique, et encore moins efficace. Mais, si vous vouliez du bon stuff, il ne fallait pas tenter l'ultimate bravery.</p>
+                <p>Cependant, si vous l'emportez, vous pourrez amplement vous féliciter.</p>
+                <p>Avant tout, voici les règles du défi :</p>
+                <ol>
+                    <li><b>Pas de retour en arrière.</b> Une fois votre build généré, vous devez l'accepter et jouer avec. Interdiction de reroll.</li>
+                    <li><b>Achetez les items dans l'ordre.</b> De gauche à droite, évidemment.</li>
+                    <li><b>N'abandonnez pas.</b> Interdiction de se rendre. Vous devez vous battre jusqu'à la dernière seconde.</li>
+                    <li><b>N'utilisez pas de ward.</b> La vision, c'est pour les nuls.</li>
+                    <li><b>Utilisez les sorts d'invocateur indiqués.</b> Et utilisez les un maximum.</li>
+                    <li><b>Vous pouvez prendre les bottes que vous voulez.</b> Parce que quand même, on est pas des animaux.</li>
+                </ol>
+                <br>
+                <h3 class="centered">Vous vous sentez prêt à relever le défi ?</h3>
+                <button class="centered big" onclick="draw()">Alors c'est parti !</button>
+            </div>
+        </div>
     </main>
     <footer>
-        <p>&copy; 2020 Enzo Filangi, Hugo Freitas, Paul Meignan, Alexandre Poloubinski | <a href="credits.html">Qui sommes nous ?</a></p>
+        <p>&copy; 2020 Enzo Filangi, Hugo Freitas, Alexandre Poloubinski | <a href="credits.html">Qui sommes nous ?</a></p>
     </footer>
+
+    <script type="text/javascript" src="data_champions.js"></script>
+    <script type="text/javascript" src="data_items.js"></script>
+    <script type="text/javascript" src="data_summoner_spells.js"></script>
+    <script type="text/javascript">
+        //On reset la vue en haut de la page
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+        window.scrollTo(0,0);
+
+        function empty_div(recipient)
+        {
+            while (recipient.firstChild) {
+                recipient.removeChild(recipient.lastChild);
+            }
+        }
+
+        Array.prototype.random = function () {
+            return this[Math.floor((Math.random()*this.length))];
+        }
+
+        function draw() {
+            const div = document.getElementById("ultimate_bravery_container");
+            empty_div(div);
+
+            const champ = Object.keys(data_champions).random();
+            const spells = [];
+            while (spells.length < 2)
+            {
+                const spell = data_summoner_spells.random();
+                if(!spells.includes(spell))
+                {
+                    spells.push(spell);
+                }
+            }
+
+            const items = [];
+            while (items.length < 5)
+            {
+                const item = data_items.random();
+                if(!items.includes(item))
+                {
+                    items.push(item);
+                }
+            }
+
+            display_answer(div, champ, items, spells)
+        }
+
+        function display_answer(div, champion, items, spells) {
+            //On ajoute le nom du champion
+            const champ_title = document.createElement("h3");
+            champ_title.className = "centered";
+            champ_title.textContent = champion;
+            //On ajoute l'image du champion
+            const img = document.createElement("img");
+            img.src = "images/champion_icons/" + data_champions[champion];
+            img.alt = champion + ". Cliquez pour accéder à sa page du wiki.";
+            img.title = champion + ". Cliquez pour accéder à sa page du wiki.";
+            img.setAttribute("width", "80%");
+            img.className = "centered";
+            //Si on clique sur l'image, on redirige vers le wiki.
+            if(champion === "Kai'sa")
+            {
+                //On prévoit un edge case pour Kai'sa car c'est le seul champion pour lequel l'URL du wiki utilise %27 et pas '
+                img.onclick = () => window.open('https://leagueoflegends.fandom.com/wiki/Kai%27Sa', '_blank');
+            } else {
+                img.onclick = () => window.open('https://leagueoflegends.fandom.com/wiki/' + champion, '_blank');
+            }
+            div.appendChild(champ_title);
+            div.appendChild(img);
+
+
+            div.appendChild(document.createElement("br"));
+
+            const item_title = document.createElement("h3");
+            item_title.className = "centered";
+            item_title.textContent = "Items";
+            item_title.style.marginTop = "0px";
+            const item_list_div = document.createElement("div");
+            item_list_div.className = "flexed_image_centered";
+
+            items.forEach((value) => {
+                const item = document.createElement("img");
+                item.src = "images/items/" + value["img"];
+                item.alt = value["nom"];
+                item.title = value["nom"];
+                item.setAttribute("width", "80px");
+                item_list_div.appendChild(item);
+            })
+            div.appendChild(item_title);
+            div.appendChild(item_list_div);
+
+
+            div.appendChild(document.createElement("br"));
+
+            const spell_title = document.createElement("h3");
+            spell_title.className = "centered";
+            spell_title.textContent = "Sorts d'invocateur";
+            spell_title.style.marginTop = "0px";
+            const spell_list_div = document.createElement("div");
+            spell_list_div.className = "flexed_image_centered";
+
+            spells.forEach((value) => {
+                const spell = document.createElement("img");
+                spell.src = "images/summoner-spells/" + value["img"];
+                spell.alt = value["nom"];
+                spell.title = value["nom"];
+                spell.setAttribute("width", "80px");
+                spell_list_div.appendChild(spell)
+            })
+            div.appendChild(spell_title);
+            div.appendChild(spell_list_div)
+        }
+    </script>
 </body>
 </html>
