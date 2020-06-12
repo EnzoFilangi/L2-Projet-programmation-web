@@ -201,10 +201,12 @@ form * {
 .flexed_image_centered * {
     margin: 10px;
     flex: 0 0 auto;
+    flex-wrap: wrap;
 }
 
 .flexed_image img {
     margin: 10px;
+    flex: 0 0 auto;
 }
 
 button.big {

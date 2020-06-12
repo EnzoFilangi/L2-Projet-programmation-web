@@ -1,10 +1,10 @@
 window.onscroll = function() {make_title_disappear()};
 
 const header = document.querySelector("header");
-const default_height = header.offsetTop;
 
 function make_title_disappear() {
-    if(window.pageYOffset > default_height)
+    console.log(window.pageYOffset);
+    if(window.pageYOffset > 50)
     {
         document.getElementById("header_title").style.display = "none";
     }
